@@ -1,16 +1,25 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MenuBuilder : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [Header("References")]
+    [SerializeField] private SceneRegistry registry;
+    [SerializeField] private Transform buttonContainer;
+    [SerializeField] private GameObject buttonPrefab;
+
+    private void Start()
     {
-        
+        BuildMenu();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void BuildMenu()
     {
-        
+        foreach (var entry in registry.scenes)
+        {
+            GameObject btnObj = Instantiate(buttonPrefab, buttonContainer);
+            SceneButton btn = btnObj.GetComponent<SceneButton>();
+            btn.Setup(entry);
+        }
     }
 }
